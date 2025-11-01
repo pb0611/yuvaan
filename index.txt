@@ -1,173 +1,90 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy 7th Birthday, Yuvaan!</title>
   <style>
-    :root{
-      --bg:#fff7e6;
-      --card:#ffffff;
-      --accent:#ff6b6b;
-      --muted:#666;
-      --shadow: 0 8px 30px rgba(16,24,40,0.08);
-    }
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;}
-    body{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: radial-gradient(circle at 10% 10%, #fff3d9 0%, var(--bg) 40%),
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at 10% 10%, #fff3d9 0%, #fff7e6 40%),
                   linear-gradient(120deg,#ffe6f0 0%, #e6f7ff 100%);
-      padding:24px;
+      font-family: Arial, sans-serif;
+      flex-direction: column;
+      overflow: hidden;
     }
-    .card{
-      width:100%;
-      max-width:920px;
-      background:var(--card);
-      border-radius:18px;
-      box-shadow:var(--shadow);
-      padding:28px;
-      text-align:center;
-      position:relative;
-      overflow:visible;
+    h1 {
+      font-size: 3em;
+      color: #ff6b6b;
+      text-align: center;
+      margin-bottom: 20px;
     }
-    h1{
-      margin:6px 0 8px;
-      font-size:38px;
-      letter-spacing:-0.5px;
-    }
-    .subtitle{color:var(--muted); margin:0 0 18px; font-size:16px;}
-    .from{margin:8px 0 22px; font-weight:600; color:#222;}
-    .controls{
-      display:flex;
-      gap:12px;
-      justify-content:center;
-      margin-bottom:20px;
-      flex-wrap:wrap;
-    }
-    .btn{
-      background:linear-gradient(180deg,#fff 0%,#f2f2f2 100%);
-      border:1px solid rgba(0,0,0,0.06);
-      padding:10px 16px;
-      border-radius:12px;
-      font-weight:600;
-      cursor:pointer;
-      box-shadow: 0 6px 18px rgba(16,24,40,0.06);
+    .btn {
+      margin: 10px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 12px;
+      background: #ff6b6b;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
       transition: 0.2s;
     }
     .btn:hover {
-      background: linear-gradient(180deg,#ffe6e6 0%,#ffdede 100%);
+      background: #ff4757;
     }
-    .characters{
-      display:flex;
-      justify-content: center;
-      gap:20px;
-      margin-top:6px;
-      flex-wrap:wrap;
-    }
-    .char{
-      width:150px;
-      background:linear-gradient(180deg, #fff, #fbfbfb);
-      border-radius:14px;
-      padding:14px;
-      box-shadow: 0 8px 20px rgba(16,24,40,0.04);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:10px;
-    }
-    .char img{
-      width:86px; height:86px; object-fit:cover; border-radius:10px;
-      background:#f3f3f3;
-    }
-    .char .label{font-weight:700;}
-    .hint{font-size:13px;color:var(--muted); margin-top:10px;}
-    .confetti{
-      position:fixed;
-      pointer-events:none;
-      left:0;top:0;right:0;bottom:0;
-      overflow:visible;
-      z-index:9999;
-    }
-    footer{margin-top:18px;color:var(--muted); font-size:13px;}
-    #countdown{font-size:18px;color:#ff6b6b;margin:12px 0;font-weight:600;}
-    @media (max-width:520px){
-      h1{font-size:28px}
-      .char{width:120px}
+    .confetti {
+      position: fixed;
+      pointer-events: none;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 9999;
+      overflow: visible;
     }
   </style>
 </head>
 <body>
-  <div class="card" role="main">
-    <h1>Happy 7th Birthday, Yuvaan!</h1>
-    <p class="subtitle">You're amazing, brave, and super cool!</p>
-    <p class="from">With love, from <strong>Poonam Maa</strong></p>
+  <h1>🎉 Happy 7th Birthday, Yuvaan! 🎉</h1>
+  <button id="musicBtn" class="btn">Play Music</button>
+  <button id="confettiBtn" class="btn">Throw Confetti</button>
 
-    <div id="countdown"></div>
-
-    <div class="controls" aria-hidden="false">
-      <button id="playBtn" class="btn">Play Birthday Music</button>
-      <button id="confettiBtn" class="btn">Throw Confetti</button>
-      <button id="downloadBtn" class="btn">Save as PNG</button>
-    </div>
-
-    <div class="characters" aria-label="characters">
-      <div class="char">
-        <img src="dinosaur.png" alt="Dinosaur" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-        <div style="display:none;font-size:48px" aria-hidden="true">🦖</div>
-        <div class="label">Dinosaur</div>
-      </div>
-      <div class="char">
-        <img src="spiderman.png" alt="Spiderman" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-        <div style="display:none;font-size:48px" aria-hidden="true">🕷️</div>
-        <div class="label">Spiderman</div>
-      </div>
-    </div>
-
-    <!-- Cake Section -->
-    <div id="cakeContainer" style="margin-top:20px;">
-      <img id="cake" src="cake.png" alt="Birthday Cake" style="width:120px;cursor:pointer;display:block;margin:0 auto;">
-      <div id="cakeFallback" style="font-size:48px;text-align:center;display:none;">🎂</div>
-    </div>
-
-    <p class="hint">Tip: To use your own images/music, place <code>dinosaur.png</code>, <code>spiderman.png</code>, <code>cake.png</code>, and <code>music.mp3</code> in the same folder as this file.</p>
-    <footer>Made with ❤️ — open the file locally or upload to Netlify/GitHub Pages to share.</footer>
-  </div>
-
-  <div class="confetti" id="confettiRoot" aria-hidden="true"></div>
-
+  <div class="confetti" id="confettiRoot"></div>
   <audio id="bgMusic" src="music.mp3" preload="auto"></audio>
 
   <script>
-    // Music button
-    const playBtn = document.getElementById('playBtn');
-    const music = document.getElementById('bgMusic');
+    // Music play/pause
+    const musicBtn = document.getElementById('musicBtn');
+    const bgMusic = document.getElementById('bgMusic');
     let isPlaying = false;
-    playBtn.addEventListener('click', async () => {
+
+    musicBtn.addEventListener('click', async () => {
       try {
-        if (!isPlaying){
-          await music.play();
-          playBtn.textContent = 'Pause Music';
+        if (!isPlaying) {
+          await bgMusic.play();
+          musicBtn.textContent = 'Pause Music';
           isPlaying = true;
         } else {
-          music.pause();
-          playBtn.textContent = 'Play Birthday Music';
+          bgMusic.pause();
+          musicBtn.textContent = 'Play Music';
           isPlaying = false;
         }
-      } catch(err){
-        alert('No music file found. To play, add music.mp3 to the folder.');
+      } catch (err) {
+        alert('Add a music.mp3 file in the same folder to play music.');
       }
     });
 
     // Confetti generator
     const confettiRoot = document.getElementById('confettiRoot');
-    function launchConfetti(count = 80){
+
+    function launchConfetti(count = 100) {
       const colors = ['#ff6b6b','#ffd93d','#6be3b7','#6bb8ff','#c78bff','#ff9ec1'];
-      for (let i=0;i<count;i++){
+      for (let i = 0; i < count; i++) {
         const el = document.createElement('div');
-        el.style.position='absolute';
-        el.style.left = Math.random()*100 + '%';
+        el.style.position = 'absolute';
+        el.style.left = Math.random() * 100 + '%';
         el.style.top = '-10px';
         el.style.width = (6 + Math.random()*10) + 'px';
         el.style.height = (10 + Math.random()*14) + 'px';
@@ -178,56 +95,24 @@
         el.style.willChange = 'transform, top, opacity';
         confettiRoot.appendChild(el);
 
-        const duration = 2000 + Math.random()*2000;
-        const horizontalShift = (Math.random()*200 - 100);
+        const duration = 2000 + Math.random() * 2000;
+        const horizontalShift = (Math.random() * 200 - 100);
         const start = performance.now();
+
         (function animate(now){
           const t = (now - start) / duration;
-          if (t < 1){
+          if (t < 1) {
             el.style.top = (t * (window.innerHeight + 200) - 10) + 'px';
             el.style.transform = 'translateX(' + (horizontalShift * t) + 'px) rotate(' + (t*720) + 'deg)';
             requestAnimationFrame(animate);
-          } else { el.remove(); }
+          } else {
+            el.remove();
+          }
         })(start);
       }
     }
-    document.getElementById('confettiBtn').addEventListener('click', ()=> launchConfetti(120));
-    window.addEventListener('load', ()=> launchConfetti(80));
 
-    // Countdown
-    const birthday = new Date('2025-11-10T00:00:00'); // Replace with actual birthday
-    const countdownEl = document.getElementById('countdown');
-    function updateCountdown() {
-      const now = new Date();
-      const diff = birthday - now;
-             countdownEl.textContent = "🎉 It's Yuvaan's Birthday! 🎉";
-      }
-    }
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-
-    // Cake image/emoji logic
-    const cakeImg = document.getElementById('cake');
-    const cakeFallback = document.getElementById('cakeFallback');
-
-    cakeImg.onerror = () => {
-      cakeImg.style.display = 'none';
-      cakeFallback.style.display = 'block';
-    };
-
-    function wiggleCake(el){
-      el.style.transform = 'rotate(-15deg)';
-      setTimeout(()=>{el.style.transform='rotate(0deg)';},200);
-    }
-
-    cakeImg.addEventListener('click', () => wiggleCake(cakeImg));
-    cakeFallback.addEventListener('click', () => wiggleCake(cakeFallback));
-
-    // Save card fallback
-    document.getElementById('downloadBtn').addEventListener('click', async () => {
-      alert('To save the card, take a screenshot or use the browser print dialog.');
-      window.print();
-    });
+    document.getElementById('confettiBtn').addEventListener('click', () => launchConfetti(150));
   </script>
 </body>
 </html>
